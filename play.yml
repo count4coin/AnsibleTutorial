@@ -45,3 +45,9 @@
     - name: show output
       ansible.builtin.debug:
         msg: "{{command_output}}"
+
+    - name: print failed command
+      ansible.builtin.debug:
+        msg: "{{item.cmd}}"
+      loop: "{{command_output.results}}"
+      when: "{{item.rc!=0}}"
