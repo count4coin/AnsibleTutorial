@@ -40,7 +40,7 @@
     - name: loop usage 
       ansible.builtin.command: "{{item}}"
       loop: "{{commands}}"
-      register: commnad_output
+      register: command_output
 
     - name: show output
       ansible.builtin.debug:
