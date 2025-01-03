@@ -42,6 +42,7 @@
       ansible.builtin.command: "{{item}}"
       loop: "{{commands}}"
       register: command_output
+      ignore_errors: yes
 
     - name: show output
       ansible.builtin.debug:
