@@ -8,3 +8,40 @@
     - name: Message
       ansible.builtin.debug: 
         msg: "{{first}}"
+
+    - name: setting new variable
+      set_fact:
+        second: y
+
+    - name: list_variables
+      set_fact:
+        list_varible:
+          - alpha
+          - beta
+          - gamma
+          - lamda
+      
+    - name: json variables
+      set_fact:
+        json_variable:
+          name: Rozy
+          Company: ABC inc
+          salary: 20
+          Hiredate: 21-jan-2019
+
+    - name: setting up list of commnads to execute
+      set_fact:
+        commands:
+          - ps -eaf
+          - whoami
+          - ls -ltr
+          - date
+
+    - name: loop usage 
+      ansible.builtin.command: "{{item}}"
+      loop: "{{commands}}"
+      register: commnad_output
+
+    - name: show output
+      ansible.builtin.debug:
+        msg: "{{command_output}}"
