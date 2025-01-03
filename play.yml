@@ -1,6 +1,6 @@
 ---
-- name : print message
-  hosts : localhost
+- name: print message
+  hosts: localhost
   tasks: 
 
     - name: Message
