@@ -1,8 +1,10 @@
 ---
 - name: print message
   hosts: localhost
+  vars:
+    first: x
   tasks: 
 
     - name: Message
       ansible.builtin.debug: 
-        msg: "Hello World!"
+        msg: "{{first}}"
