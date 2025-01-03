@@ -36,6 +36,7 @@
           - whoami
           - ls -ltr
           - date
+          - Stupid
 
     - name: loop usage 
       ansible.builtin.command: "{{item}}"
