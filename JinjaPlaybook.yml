@@ -1,0 +1,36 @@
+- name: Validate Commands with Jinja
+  hosts: localhost
+  gather_facts: no
+  vars:
+    commands:
+      - "mkdir Richa"
+      - "ls"
+      - "ps -ef"
+      - "df -h"
+      - "top"
+      - "smv"
+      - "psm"
+  tasks:
+
+    # Execute each command and register results
+    - name: Execute commands
+      ansible.builtin.shell: "{{ item }}"
+      loop: "{{ commands }}"
+      register: command_results
+      ignore_errors: yes
+
+    # Categorize commands using Jinja templating
+    - name: Categorize commands
+      set_fact:
+        valid: "{{ command_results.results | selectattr('rc', 'equalto', 0) | map(attribute='item') | list }}"
+        invalid: "{{ command_results.results | selectattr('rc', 'ne', 0) | map(attribute='item') | list }}"
+
+    # Display valid commands using Jinja
+    - name: Display valid commands
+      ansible.builtin.debug:
+        msg: "{{ 'Valid Commands: ' + valid | join(', ') if valid else 'No valid commands found.' }}"
+
+    # Display invalid commands using Jinja
+    - name: Display invalid commands
+      ansible.builtin.debug:
+        msg: "{{ 'Invalid Commands: ' + invalid | join(', ') if invalid else 'No invalid commands found.' }}"

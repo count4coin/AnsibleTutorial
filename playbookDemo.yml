@@ -1,0 +1,41 @@
+---
+
+- name: check valid command
+  hosts: localhost
+          
+    - name: List of commands
+      set_facts:
+        - mkdir Richa
+        - ls -l
+        - ps -ef
+        - df -h
+        - top
+        - smv
+        - psm
+
+    - name: Run list of commands
+       ansible.builtin.commands: "{{item}}"
+       loop: "{{commands}}"
+       register: command_output
+       ignore_errors: yes
+
+    - name: Define result list
+      set_facts:
+          valid: []
+          invalid: []
+
+    - name: Categorize commands
+      set_fact:
+        valid: "{{ valid + [item.item] }}"
+        invalid: "{{ invalid + [item.item] }}"
+      loop: "{{ command_output.result }}"
+      when: item.rc == 0
+      when: item.rc != 0
+
+    - name: Display valid commands
+      ansible.builtin.debug:
+       msg: "Valid Commands: {{ valid }}"
+
+    - name: Display invalid commands
+      ansible.builtin.debug:
+        msg: "Invalid Commands: {{ invalid }}"
