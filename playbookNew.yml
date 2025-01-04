@@ -28,13 +28,13 @@
     - name: Add valid commands
       set_fact:
         valid: "{{ valid + [item.item] }}"
-      loop: "{{ command_output.output }}"
+      loop: "{{ command_output.results }}"
       when: item.rc == 0
 
     - name: Add invalid commands
       set_fact:
         invalid: "{{ invalid + [item.item] }}"
-      loop: "{{ command_output.output }}"
+      loop: "{{ command_output.results }}"
       when: item.rc != 0
 
 
