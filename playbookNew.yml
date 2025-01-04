@@ -4,7 +4,7 @@
   tasks: 
           
     - name: List of commands
-      set_facts:
+      set_fact:
         commands:
           - pwd
           - ls -l
