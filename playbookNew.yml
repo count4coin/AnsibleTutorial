@@ -5,13 +5,14 @@
           
     - name: List of commands
       set_facts:
-        - mkdir Richa
-        - ls -l
-        - ps -ef
-        - df -h
-        - top
-        - smv
-        - psm
+        commands:
+          - mkdir Richa
+          - ls -l
+          - ps -ef
+          - df -h
+          - top
+          - smv
+          - psm
 
     - name: Run list of commands
        ansible.builtin.commands: "{{item}}"
