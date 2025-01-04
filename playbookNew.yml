@@ -21,7 +21,7 @@
       ignore_errors: yes
 
     - name: Define result list
-      set_facts:
+      set_fact:
           valid: []
           invalid: []
 
