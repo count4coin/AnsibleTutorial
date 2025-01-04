@@ -15,7 +15,7 @@
           - psm
 
     - name: Run list of commands
-      ansible.builtin.commands: "{{item}}"
+      ansible.builtin.command: "{{item}}"
       loop: "{{commands}}"
       register: command_output
       ignore_errors: yes
@@ -25,13 +25,18 @@
           valid: []
           invalid: []
 
-    - name: Categorize commands
+    - name: Add valid commands
       set_fact:
         valid: "{{ valid + [item.item] }}"
-        invalid: "{{ invalid + [item.item] }}"
-      loop: "{{ command_output.result }}"
+      loop: "{{ command_output.output }}"
       when: item.rc == 0
+
+    - name: Add invalid commands
+      set_fact:
+        invalid: "{{ invalid + [item.item] }}"
+      loop: "{{ command_output.output }}"
       when: item.rc != 0
+
 
     - name: Display valid commands
       ansible.builtin.debug:
