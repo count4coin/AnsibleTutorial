@@ -6,7 +6,7 @@
     - name: List of commands
       set_facts:
         commands:
-          - mkdir Richa
+          - pwd
           - ls -l
           - ps -ef
           - df -h
@@ -15,10 +15,10 @@
           - psm
 
     - name: Run list of commands
-       ansible.builtin.commands: "{{item}}"
-       loop: "{{commands}}"
-       register: command_output
-       ignore_errors: yes
+      ansible.builtin.commands: "{{item}}"
+      loop: "{{commands}}"
+      register: command_output
+      ignore_errors: yes
 
     - name: Define result list
       set_facts:
