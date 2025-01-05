@@ -3,25 +3,25 @@
   hosts: localhost
 
   tasks:
-    # Step 1: Get the list of running services
-    - name: Retrieve all running services
-      ansible.builtin.command: systemctl list-units --type=service --state=running
-      register: service_output
+    # Step 1: Get the list of running processes
+      - name: Retrieve all running processes
+      ansible.builtin.command: ps -eo comm
+      register: process_output
 
-    # Step 2: Parse service data into a list of service names
-    - name: Extract service names
+    # Step 2: Parse process data into a list of process names
+    - name: Extract process names
       set_fact:
-        services: "{{ service_output.stdout_lines | map('split', ' ') | map('first') | select('match', '\\.service$') | list }}"
+        processes: "{{ process_output.stdout_lines }}"
 
     # Step 3: Filter PostgreSQL-related services
     - name: Filter PostgreSQL services
       set_fact:
-        postgres_services: "{{ services | select('search', 'postgres') | list }}"
+        postgres_services: "{{ processes | select('search', 'postgres') | list }}"
 
     # Step 4: Group other services
     - name: Group other services
       set_fact:
-        other_services: "{{ services | difference(postgres_services) }}"
+        other_services: "{{ processes | difference(postgres_services }}"
 
     # Step 5: Display PostgreSQL-related services
     - name: Display PostgreSQL-related services
