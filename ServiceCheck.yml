@@ -4,9 +4,9 @@
 
   tasks:
     # Step 1: Get the list of running processes
-      - name: Retrieve all running processes
-        ansible.builtin.command: ps -eo comm
-        register: process_output
+    - name: Retrieve all running processes
+      ansible.builtin.command: ps -eo comm
+      register: process_output
 
     # Step 2: Parse process data into a list of process names
     - name: Extract process names
