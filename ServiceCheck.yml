@@ -21,7 +21,7 @@
     # Step 4: Group other services
     - name: Group other services
       set_fact:
-        other_services: "{{ processes | difference(postgres_services }}"
+        other_services: "{{ processes | difference(postgres_services) }}"
 
     # Step 5: Display PostgreSQL-related services
     - name: Display PostgreSQL-related services
